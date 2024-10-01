@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -58,4 +59,11 @@ public class OrderService {
         orderRepository.save(currentOrder);
     }
 
+    public List<PurchaseOrder> getAllOrders() {
+        return orderRepository.findAll();
+    }
+
+    public PurchaseOrder getById(UUID orderId) {
+        return orderRepository.findById(orderId).get();
+    }
 }
