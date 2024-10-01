@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -28,6 +29,9 @@ public class MenuService {
     }
 
     public Menu getOneById(UUID id) {
+        Optional<Menu> op = menuRepository.findById(id);
+        if (op.isEmpty())
+            throw new RuntimeException();
         return menuRepository.findById(id).get();
     }
 

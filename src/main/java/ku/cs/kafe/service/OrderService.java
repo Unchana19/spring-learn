@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -41,6 +42,9 @@ public class OrderService {
     public void order(UUID menuId, AddToCartRequest request) {
         PurchaseOrder currentOrder = getCurrentOrder();
 
+        Optional<Menu> op = menuRepository.findById(menuId);
+        if (op.isEmpty())
+            throw new RuntimeException();
         Menu menu = menuRepository.findById(menuId).get();
 
         OrderItem item = new OrderItem();
@@ -64,6 +68,9 @@ public class OrderService {
     }
 
     public PurchaseOrder getById(UUID orderId) {
+        Optional<PurchaseOrder> op = orderRepository.findById(orderId);
+        if (op.isEmpty())
+            throw new RuntimeException();
         return orderRepository.findById(orderId).get();
     }
 }
